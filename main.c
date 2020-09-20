@@ -6,7 +6,7 @@
 /*   By: jsalmi <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/19 13:03:58 by jsalmi            #+#    #+#             */
-/*   Updated: 2020/09/19 16:57:43 by jsalmi           ###   ########.fr       */
+/*   Updated: 2020/09/20 13:00:14 by jsalmi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,8 +22,11 @@ int		main(void)
 	ft_printf("%f\n", 123.4567890);
 	ft_printf("%4.9f\n", 123.4907890789078909);
 	ft_printf("%s %c %d %x\n", "string", 'c', 123, 123);
-	ft_printf("%s%c%d%x%f\n", "string", 'c', 123, 123, 123.0987654321);
-	ft_printf("%\n", "string");
+	ft_printf("%s %c %d %x %f\n", "string", 'c', 123, 123, 123.0954675);
+	ft_printf("%s %d %x %f\n","strubg", 123, 123, 123.9123);
+	ft_printf("%.f\n", 123.123123);
+	ft_printf("%-0.9f\n", 123.123121233);
+	ft_printf("%f %x %s\n", 123.123123, 123, "string");
 	while (1);
 	return (0);
 }
