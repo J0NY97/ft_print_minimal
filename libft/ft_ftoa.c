@@ -6,7 +6,7 @@
 /*   By: jsalmi <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/19 15:54:23 by jsalmi            #+#    #+#             */
-/*   Updated: 2020/09/20 13:40:16 by jsalmi           ###   ########.fr       */
+/*   Updated: 2020/09/20 17:06:52 by jsalmi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,8 @@
 
 char	*special_itoa(int nbr, int n)
 {
-	int i;
-	char *str;
+	int		i;
+	char	*str;
 
 	str = ft_strnew(n);
 	i = 0;
