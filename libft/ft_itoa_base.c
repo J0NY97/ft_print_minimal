@@ -6,7 +6,7 @@
 /*   By: jsalmi <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/20 11:11:13 by jsalmi            #+#    #+#             */
-/*   Updated: 2020/09/20 12:53:46 by jsalmi           ###   ########.fr       */
+/*   Updated: 2020/09/20 13:39:21 by jsalmi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,8 +36,7 @@ char	*ft_itoa_base(int nbr, int base)
 	int		len;
 
 	len = ft_nbrlen_base(nbr, base);
-	str = (char *)malloc(sizeof(char) * len + 1);
-	str[len] = '\0';
+	str = ft_strnew(len);
 	if (nbr < 0)
 		str[0] = '-';
 	else if (nbr == 0)

@@ -6,7 +6,7 @@
 /*   By: jsalmi <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/19 15:54:23 by jsalmi            #+#    #+#             */
-/*   Updated: 2020/09/20 13:06:05 by jsalmi           ###   ########.fr       */
+/*   Updated: 2020/09/20 13:40:16 by jsalmi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,8 +17,7 @@ char	*special_itoa(int nbr, int n)
 	int i;
 	char *str;
 
-	str = (char *)malloc(sizeof(char) * n + 1);
-	str[n] = '\0';
+	str = ft_strnew(n);
 	i = 0;
 	while (nbr)
 	{
@@ -43,7 +42,7 @@ char	*ft_ftoa(double d, int precision)
 	fpart = d - (double)ipart;
 	temp = ft_itoa(ipart);
 	i = ft_strlen(temp);
-	str = (char *)malloc(sizeof(char) * i + precision + 1);
+	str = ft_strnew(i + precision + 1);
 	ft_strcpy(str, temp);
 	if (precision > 0)
 	{

@@ -6,7 +6,7 @@
 /*   By: jsalmi <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/17 14:44:05 by jsalmi            #+#    #+#             */
-/*   Updated: 2020/09/20 11:18:59 by jsalmi           ###   ########.fr       */
+/*   Updated: 2020/09/20 13:23:37 by jsalmi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,5 +97,6 @@ char				*ft_strndup(const char *s1, size_t len);
 char				*ft_ftoa(double d, int precision);
 int					ft_pow(int base, int exp);
 char				*ft_itoa_base(int nbr, int base);
+int					ft_stradd(char **dest, char *src);
 
 #endif

@@ -6,7 +6,7 @@
 /*   By: jsalmi <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/19 13:09:27 by jsalmi            #+#    #+#             */
-/*   Updated: 2020/09/20 12:13:50 by jsalmi           ###   ########.fr       */
+/*   Updated: 2020/09/20 16:46:30 by jsalmi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,7 @@ typedef	struct	s_flags
 	int			width;
 	int			asterix;
 	// precision
+	int			precision_given;
 	int			precision;
 	// length
 	int			hh;
