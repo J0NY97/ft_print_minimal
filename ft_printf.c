@@ -6,7 +6,7 @@
 /*   By: jsalmi <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/19 13:03:37 by jsalmi            #+#    #+#             */
-/*   Updated: 2020/09/20 13:48:51 by jsalmi           ###   ########.fr       */
+/*   Updated: 2020/09/23 12:26:25 by jsalmi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ int		ft_printf(const char *restrict format, ...)
 		ft_putstr("couldnt malloc info\n");
 	info->input = ft_strdup(format);
 	info->output = ft_strnew(1);
-	info->flags.specifiers = ft_strdup("csxfd");
+	info->flags.specifiers = ft_strdup("diouxXcsf");
 	va_start(info->ap, format);
 	input_parser(info);
 	va_end(info->ap);

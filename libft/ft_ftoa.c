@@ -6,7 +6,7 @@
 /*   By: jsalmi <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/19 15:54:23 by jsalmi            #+#    #+#             */
-/*   Updated: 2020/09/20 17:06:52 by jsalmi           ###   ########.fr       */
+/*   Updated: 2020/09/23 13:08:43 by jsalmi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ char	*special_itoa(int nbr, int n)
 	ft_reverse(str);
 	return (str);
 }
-
+#include "stdio.h"
 char	*ft_ftoa(double d, int precision)
 {
 	int		i;
@@ -37,9 +37,10 @@ char	*ft_ftoa(double d, int precision)
 	double	fpart;
 	char	*str;
 	char	*temp;
-
+	
 	ipart = (int)d;
 	fpart = d - (double)ipart;
+	fpart = fpart < 0 ? -fpart : fpart;
 	temp = ft_itoa(ipart);
 	i = ft_strlen(temp);
 	str = ft_strnew(i + precision + 1);
