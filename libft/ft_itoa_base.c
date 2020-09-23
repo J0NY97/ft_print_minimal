@@ -6,7 +6,7 @@
 /*   By: jsalmi <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/20 11:11:13 by jsalmi            #+#    #+#             */
-/*   Updated: 2020/09/20 13:39:21 by jsalmi           ###   ########.fr       */
+/*   Updated: 2020/09/23 15:37:18 by jsalmi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,24 +20,35 @@ char	val(int c)
 		return ('A' - 10 + c);
 }
 
-int		ft_nbrlen_base(int nbr, int base)
+int		ft_nbrlen_base(size_t nbr, int base)
 {
-	int	i;
+	int	len;
 
-	i = 1;
-	while (nbr >= ft_pow(base, i))
-		i++;
-	return (i);
+	len = 0;
+	if (nbr == 0)
+		return (1);
+	if (nbr < 0)
+		len++;
+	while (nbr != 0)
+	{
+		nbr = nbr / base;
+		len++;
+	}
+	return (len);
 }
 
-char	*ft_itoa_base(int nbr, int base)
+char	*ft_itoa_base(size_t nbr, int base)
 {
 	char	*str;
 	int		len;
+	int		neg;
 
+	neg = nbr < 0 ? -1 : 1;
+	nbr *= neg;
 	len = ft_nbrlen_base(nbr, base);
+	len += neg == -1 ? 1 : 0;
 	str = ft_strnew(len);
-	if (nbr < 0)
+	if (neg == -1)
 		str[0] = '-';
 	else if (nbr == 0)
 		str[0] = '0';

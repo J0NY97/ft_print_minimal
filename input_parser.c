@@ -6,7 +6,7 @@
 /*   By: jsalmi <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/19 13:13:51 by jsalmi            #+#    #+#             */
-/*   Updated: 2020/09/23 13:06:06 by jsalmi           ###   ########.fr       */
+/*   Updated: 2020/09/23 16:50:54 by jsalmi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,26 +14,25 @@
 
 char	*output_type(char type, va_list ap, t_flags *flags);
 int		flag_parser(t_flags *flags, const char *format);
-char	*put_char(char d);
-char	*put_int(int d, char type);
-char	*put_str(char *d);
-char	*put_float(double d, t_flags *flags);
+void	flag_filter(t_flags *flags);
 
 void	input_parser(t_info *info)
 {
-	int	i;
-	char *new;
-	char *temp;
+	int		i;
+	char	*new;
+	char	*temp;
 
 	i = 0;
 	while (info->input[i] != '\0')
 	{
-		if (info->input[i] == '%' && flag_parser(&info->flags, info->input + i + 1))
+		if (info->input[i] == '%')
 		{
+			flag_parser(&info->flags, info->input + i + 1);
 			if (info->flags.specifier != 0 &&
 				ft_strchr(info->flags.specifiers, info->flags.specifier))
 			{
-				while (info->input[i] != info->flags.specifier && (++i));
+				while (info->input[i] != info->flags.specifier)
+					i++;
 				new = output_type(info->flags.specifier, info->ap, &info->flags);
 			}
 		}
@@ -64,6 +63,7 @@ void	reset_flags(t_flags *flags)
 	flags->l = -1;
 	flags->big_l = -1;
 	flags->specifier = 0;
+	flags->negativ = -1;
 }
 
 int		check_flags(const char *format, t_flags *flags, char *flag_chars)
@@ -121,9 +121,9 @@ int		flag_parser(t_flags *flags, const char *format)
 
 char	*padding(char *str, char type, t_flags *flags)
 {
-	char *new;
-	int	padd_amount;
-	int k;
+	char	*new;
+	int		padd_amount;
+	int		k;
 	
 	k = -1;
 	new = NULL;
@@ -145,10 +145,10 @@ char	*padding(char *str, char type, t_flags *flags)
 
 char	*specifier_padding(char *str, char type, t_flags *flags)
 {
-	char *new;
-	int	padd_amount;
-	int k;
-	int len;
+	char	*new;
+	int		padd_amount;
+	int		k;
+	int		len;
 	
 	k = -1;
 	new = NULL;
@@ -170,103 +170,83 @@ void	flag_filter(t_flags *flags)
 		flags->minus = -1;
 }
 
+char	*add_special_chars(const char *old, t_flags *flags)
+{
+	char	*new;
+	char	*temp;
+	int		set;
+
+	set = 0;
+	new = ft_strdup(old);
+	if (flags->plus == 1 && (set = 1))
+		temp = ft_strjoin("+", new);
+	else if (flags->hash == 1 &&
+			(flags->specifier == 'x' || flags->specifier == 'X') && (set = 1))
+		temp = ft_strjoin("0X", new);
+	else if (flags->hash == 1 &&
+			flags->specifier == 'o' && flags->precision_given == -1 && (set = 1))
+		temp = ft_strjoin("0", new);
+	if (set == 1)
+		ft_strreplace(&new, &temp);
+	return (new);
+}
+
 char	*output_type(char type, va_list ap, t_flags *flags)
 {
 	char *new;
 	char *temp;
-
+	
 	if (type == 'c')
 		new = put_char(va_arg(ap, int));
-	else if (type == 'd' || type == 'i' || type == 'u' || type == 'o' || type == 'x' || type == 'X')
-		new = put_int(va_arg(ap, int), type);
+	else if (type == 'd' || type == 'i')
+		new = put_int((long long int)va_arg(ap, int), flags);
+	else if (type == 'x' || type == 'X' || type == 'u' || type == 'o')
+		new = put_int((unsigned long long int)va_arg(ap, void *), flags);
 	else if (type == 's')
 		new = put_str(va_arg(ap, char *));
 	else if (type == 'f')
-		new = put_float(va_arg(ap, double), flags);
-	flag_filter(flags);
-	printf("w: %d, m: %d p: %d h: %d z: %d s: %d prec_given %d precision %d\n",
+		new = put_float((long double)va_arg(ap, double), flags);
+/*	printf("w: %d, m: %d p: %d h: %d z: %d s: %d prec_given %d precision %d\n",
 			flags->width, flags->minus, flags->plus, flags->hash, flags->zero,
-			flags->space, flags->precision_given, flags->precision);
+			flags->space, flags->precision_given, flags->precision);*/
 	if (flags->precision_given != -1 && flags->specifier == 's')
 	{
 		temp = ft_strndup(new, flags->precision);
-		ft_strdel(&new);
-		new = ft_strdup(temp);
-		ft_strdel(&temp);
+		ft_strreplace(&new, &temp);
 	}
-	if (flags->width > -1 || (flags->precision_given != -1 && flags->specifier != 'f'))
+	if (flags->precision_given != -1 && flags->specifier != 'f')
 	{
-		if (flags->precision_given != -1 && flags->specifier != 'f')
+		temp = specifier_padding(new, type, flags);
+		ft_strreplace(&new, &temp);
+	}
+	// the special characters, 0x, +, - if not zero
+	if (flags->zero == -1)
+	{
+		temp = add_special_chars(new, flags);
+		ft_strreplace(&new, &temp);
+		if (flags->negativ == 1)
 		{
-			temp = specifier_padding(new, type, flags);
-			if (temp != NULL)
-			{
-				ft_strdel(&new);
-				new = ft_strdup(temp);
-				ft_strdel(&temp);
-			}
-		}
-		if (flags->width > -1)
-		{
-			temp = padding(new, type, flags);
-			if (temp != NULL)
-			{
-				ft_strdel(&new);
-				new = ft_strdup(temp);
-				ft_strdel(&temp);
-			}
+			temp = ft_strjoin("-", new);
+			ft_strreplace(&new, &temp);
 		}
 	}
-	return (new);
-}
-
-char	*put_char(char d)
-{
-	char *new;
-
-	new = (char *)malloc(sizeof(char) + 1);
-	new[0] = d;
-	new[1] = '\0';
-	return (new);
-}
-
-char	*put_int(int d, char type)
-{
-	char *new;
-	int	i;
-
-	i = -1;
-	if (type == 'd')
-		new = ft_itoa_base(d, 10);
-	else if (type == 'o')
-		new = ft_itoa_base(d, 8);
-	else if (type == 'x')
+	if (flags->width > -1)
 	{
-		new = ft_itoa_base(d, 16);
+		temp = padding(new, type, flags);
+		ft_strreplace(&new, &temp);
+	}
+	// the special characters, 0x, +, - if zero
+	if (flags->zero == 1)
+	{
+		temp = add_special_chars(new, flags);
+		ft_strreplace(&new, &temp);
+		if (flags->negativ == 1)
+			new[0] = '-';
+	}
+
+	int i = 0;
+	if (flags->specifier == 'x')
 		while (new[i++])
 			new[i] = ft_tolower(new[i]);
-	}
-	else if (type == 'X')
-		new = ft_itoa_base(d, 16);
-	else if (type == 'i')
-		new = ft_itoa_base(d, 10);
-	else if (type == 'u')
-		new = ft_itoa_base(d, 10);
-	return (new);
-}
-
-char	*put_str(char *d)
-{
-	char *new;
-
-	new = ft_strdup(d);
-	return (new);
-}
-
-char	*put_float(double d, t_flags *flags)
-{
-	char *new;
-
-	new = ft_ftoa(d, flags->precision);
 	return (new);
 }

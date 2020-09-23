@@ -100,6 +100,31 @@ int main(void)
 	printf("Real x: %#20.10x\n", x);
 	ft_printf("User X: %#20.10X\n", x);
 	printf("Real X: %#20.10X\n", x);
+
+	ft_printf("User negative 020f: %020f\n", -123.123);
+	printf("Real negative 020f: %020f\n", -123.123);
+
+	ft_printf("User negative 020d: %020d\n", -123);
+	printf("Real negative 020d: %020d\n", -123);
+
+	ft_printf("User negative 020i: %020i\n", -123);
+	printf("Real negative 020i: %020i\n", -123);
+
+	ft_printf("User negative 020o: %020o\n", -123);
+	printf("Real negative 020o: %020o\n", -123);
+	
+	ft_printf("User negative 020x: %020x\n", -123);
+	printf("Real negative 020x: %020x\n", -123);
+
+	ft_printf("User negative 020u: %020u\n", -123);
+	printf("Real negative 020u: %020u\n", -123);
+
+	ft_printf("User negative ld: %ld\n", 1234567890123456789);
+	printf("Real negative ld: %ld\n", 1234567890123456789);
+char *str = ft_sprintf("%d %s %f uyjuujuy", 123, "jony", 0.144);
+	printf("%s\n",  str);
+
+	ft_fprintf(2, "%d %s %c\n", 123, "niklas", 'a');
 	while (1);
 	return (0);
 }

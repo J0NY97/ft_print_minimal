@@ -1,7 +1,8 @@
 NAME = a.out
 SRCS = ./main.c\
 		./ft_printf.c\
-		./input_parser.c
+		./input_parser.c\
+		./put_functions.c
 OBJS = ./*.o
 INCLUDES = ./libft/libft.a
 FLAGS = -Wall -Wextra -Werror

@@ -6,7 +6,7 @@
 /*   By: jsalmi <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/19 13:09:27 by jsalmi            #+#    #+#             */
-/*   Updated: 2020/09/20 16:46:30 by jsalmi           ###   ########.fr       */
+/*   Updated: 2020/09/23 16:15:34 by jsalmi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,29 +15,24 @@
 
 # include "./libft/libft.h"
 # include <stdarg.h>
-# include <math.h>
 
 typedef	struct	s_flags
 {
-	// flags
 	int			minus;
 	int			plus;
 	int			space;
 	int			hash;
 	int			zero;
-	// width
+	int			negativ;
 	int			width;
 	int			asterix;
-	// precision
 	int			precision_given;
 	int			precision;
-	// length
 	int			hh;
 	int			h;
 	int			l;
 	int			ll;
 	int			big_l;
-	// spec
 	char		specifier;
 	char		*specifiers;
 }				t_flags;
@@ -52,6 +47,12 @@ typedef	struct	s_info
 }				t_info;
 
 int				ft_printf(const char *restrict format, ...);
+char			*ft_sprintf(const char *restrict format, ...);
+int				ft_fprintf(int fd, const char *restrict format, ...);
 void			input_parser(t_info *info);
+char			*put_char(char d);
+char			*put_int(size_t d, t_flags *flags);
+char			*put_str(char *d);
+char			*put_float(double d, t_flags *flags);
 
 #endif
