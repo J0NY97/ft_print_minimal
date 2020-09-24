@@ -6,7 +6,7 @@
 /*   By: jsalmi <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/23 16:14:12 by jsalmi            #+#    #+#             */
-/*   Updated: 2020/09/24 10:55:42 by jsalmi           ###   ########.fr       */
+/*   Updated: 2020/09/24 12:22:29 by jsalmi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,7 @@ char	*put_int(size_t d, t_flags *flags)
 	char *new;
 	char type;
 
+	new = NULL;
 	type = flags->specifier;
 	if ((long long int)d < 0)
 	{

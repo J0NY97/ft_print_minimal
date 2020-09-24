@@ -6,7 +6,7 @@
 /*   By: jsalmi <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/19 13:09:27 by jsalmi            #+#    #+#             */
-/*   Updated: 2020/09/24 12:06:19 by jsalmi           ###   ########.fr       */
+/*   Updated: 2020/09/24 12:21:53 by jsalmi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,10 +57,8 @@ char			*put_float(double d, t_flags *flags);
 void			apply_flags_to_string(char **new, t_flags *flags);
 char			*add_special_chars(const char *old, t_flags *flags);
 char			*specifier_to_string(char type, va_list ap, t_flags *flags);
-char			*specifier_padding(char *str, char type, t_flags *flags);
-char			*padding(char *str, char type, t_flags *flags);
 void			flag_filter(t_flags *flags);
-char			*specifier_padding(char *str, char type, t_flags *flags);
-char			*padding(char *str, char type, t_flags *flags);
+char			*specifier_padding(char *str, t_flags *flags);
+char			*padding(char *str, t_flags *flags);
 
 #endif

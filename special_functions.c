@@ -6,13 +6,13 @@
 /*   By: jsalmi <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/24 12:04:44 by jsalmi            #+#    #+#             */
-/*   Updated: 2020/09/24 12:05:37 by jsalmi           ###   ########.fr       */
+/*   Updated: 2020/09/24 12:21:29 by jsalmi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
 
-char	*padding(char *str, char type, t_flags *flags)
+char	*padding(char *str, t_flags *flags)
 {
 	char	*new;
 	int		padd_amount;
@@ -36,7 +36,7 @@ char	*padding(char *str, char type, t_flags *flags)
 	return (new);
 }
 
-char	*specifier_padding(char *str, char type, t_flags *flags)
+char	*specifier_padding(char *str, t_flags *flags)
 {
 	char	*new;
 	int		padd_amount;

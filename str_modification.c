@@ -6,7 +6,7 @@
 /*   By: jsalmi <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/24 12:00:17 by jsalmi            #+#    #+#             */
-/*   Updated: 2020/09/24 12:12:38 by jsalmi           ###   ########.fr       */
+/*   Updated: 2020/09/24 12:23:05 by jsalmi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@ char	*specifier_to_string(char type, va_list ap, t_flags *flags)
 {
 	char *new;
 
+	new = NULL;
 	if (type == 'c')
 		new = put_char(va_arg(ap, int));
 	else if (type == 'd' || type == 'i')
@@ -56,7 +57,7 @@ void	apply_flags_to_string(char **new, t_flags *flags)
 
 	if (flags->precision_given != -1 && flags->specifier != 'f')
 	{
-		temp = specifier_padding(*new, flags->specifier, flags);
+		temp = specifier_padding(*new, flags);
 		ft_strreplace(new, &temp);
 	}
 	if (flags->zero == -1)
@@ -68,7 +69,7 @@ void	apply_flags_to_string(char **new, t_flags *flags)
 	}
 	if (flags->width > -1)
 	{
-		temp = padding(*new, flags->specifier, flags);
+		temp = padding(*new, flags);
 		ft_strreplace(new, &temp);
 	}
 	if (flags->zero == 1)
