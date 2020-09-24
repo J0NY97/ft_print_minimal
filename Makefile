@@ -5,7 +5,7 @@ SRCS =	./ft_printf.c\
 		./special_functions.c\
 		./put_functions.c
 OBJS = $(SRCS:.c=.o)
-INCLUDES = ./libft/libft.a
+INCLUDES = ../libft/libft.a
 FLAGS = -Wall -Wextra -Werror
 
 all: $(NAME)
