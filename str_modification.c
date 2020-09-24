@@ -6,7 +6,7 @@
 /*   By: jsalmi <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/24 12:00:17 by jsalmi            #+#    #+#             */
-/*   Updated: 2020/09/24 12:02:53 by jsalmi           ###   ########.fr       */
+/*   Updated: 2020/09/24 12:12:38 by jsalmi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,11 +63,8 @@ void	apply_flags_to_string(char **new, t_flags *flags)
 	{
 		temp = add_special_chars(*new, flags);
 		ft_strreplace(new, &temp);
-		if (flags->negativ == 1)
-		{
-			temp = ft_strjoin("-", *new);
-			ft_strreplace(new, &temp);
-		}
+		flags->negativ == 1 ? temp = ft_strjoin("-", *new) : 0;
+		flags->negativ == 1 ? ft_strreplace(new, &temp) : 0;
 	}
 	if (flags->width > -1)
 	{
@@ -78,7 +75,6 @@ void	apply_flags_to_string(char **new, t_flags *flags)
 	{
 		temp = add_special_chars(*new, flags);
 		ft_strreplace(new, &temp);
-		if (flags->negativ == 1)
-			*new[0] = '-';
+		flags->negativ == 1 ? *new[0] = '-' : 0;
 	}
 }

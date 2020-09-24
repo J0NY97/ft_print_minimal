@@ -6,7 +6,7 @@
 /*   By: jsalmi <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/19 13:13:51 by jsalmi            #+#    #+#             */
-/*   Updated: 2020/09/24 12:05:43 by jsalmi           ###   ########.fr       */
+/*   Updated: 2020/09/24 12:09:29 by jsalmi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,7 @@ int		check_flags(const char *format, t_flags *flags, char *flag_chars)
 	int i;
 
 	i = 0;
+	reset_flags(flags);
 	while (format[i] && ft_strchr(flag_chars, format[i]))
 	{
 		if (format[i] == '-')
@@ -53,12 +54,11 @@ int		check_flags(const char *format, t_flags *flags, char *flag_chars)
 	return (i);
 }
 
-int		flag_parser(t_flags *flags, const char *format)
+void	flag_parser(t_flags *flags, const char *format)
 {
 	int i;
 	int k;
 
-	reset_flags(flags);
 	i = check_flags(format, flags, "#0- +");
 	while (format[i] && !ft_strchr(flags->specifiers, format[i]))
 	{
@@ -81,7 +81,6 @@ int		flag_parser(t_flags *flags, const char *format)
 	}
 	if (ft_strchr(flags->specifiers, format[i]))
 		flags->specifier = format[i];
-	return (1);
 }
 
 char	*output_type(va_list ap, t_flags *flags)
