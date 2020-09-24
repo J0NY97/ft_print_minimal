@@ -6,7 +6,7 @@
 /*   By: jsalmi <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/19 13:09:27 by jsalmi            #+#    #+#             */
-/*   Updated: 2020/09/24 13:30:51 by jsalmi           ###   ########.fr       */
+/*   Updated: 2020/09/24 13:51:20 by jsalmi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,19 +37,19 @@ typedef	struct	s_flags
 	char		*specifiers;
 }				t_flags;
 
-typedef	struct	s_info
+typedef	struct	s_printf
 {
 	int			length;
 	va_list		ap;
 	char		*input;
 	char		*output;
 	t_flags		flags;
-}				t_info;
+}				t_printf;
 
 int				ft_printf(const char *restrict format, ...);
 char			*ft_sprintf(const char *restrict format, ...);
 int				ft_fprintf(int fd, const char *restrict format, ...);
-void			input_parser(t_info *info);
+void			input_parser(t_printf *info);
 char			*put_char(char d);
 char			*put_int(size_t d, t_flags *flags);
 char			*put_str(char *d, t_flags *flags);

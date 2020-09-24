@@ -6,7 +6,7 @@
 /*   By: jsalmi <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/19 13:13:51 by jsalmi            #+#    #+#             */
-/*   Updated: 2020/09/24 13:18:14 by jsalmi           ###   ########.fr       */
+/*   Updated: 2020/09/24 13:50:46 by jsalmi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,7 +99,7 @@ char	*output_type(va_list ap, t_flags *flags)
 	return (new);
 }
 
-void	input_parser(t_info *info)
+void	input_parser(t_printf *info)
 {
 	int		i;
 	char	*new;

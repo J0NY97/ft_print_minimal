@@ -6,7 +6,7 @@
 /*   By: jsalmi <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/19 13:03:37 by jsalmi            #+#    #+#             */
-/*   Updated: 2020/09/23 16:13:13 by jsalmi           ###   ########.fr       */
+/*   Updated: 2020/09/24 13:50:30 by jsalmi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,10 +14,10 @@
 
 int		ft_printf(const char *restrict format, ...)
 {
-	t_info	*info;
-	int		result;
+	t_printf	*info;
+	int			result;
 
-	if (!(info = (t_info *)malloc(sizeof(t_info))))
+	if (!(info = (t_printf *)malloc(sizeof(t_printf))))
 		ft_putstr("couldnt malloc info\n");
 	info->input = ft_strdup(format);
 	info->output = ft_strnew(1);
@@ -36,10 +36,10 @@ int		ft_printf(const char *restrict format, ...)
 
 char	*ft_sprintf(const char *restrict format, ...)
 {
-	t_info	*info;
-	char	*result;
+	t_printf	*info;
+	char		*result;
 
-	if (!(info = (t_info *)malloc(sizeof(t_info))))
+	if (!(info = (t_printf *)malloc(sizeof(t_printf))))
 		ft_putstr("couldnt malloc info\n");
 	info->input = ft_strdup(format);
 	info->output = ft_strnew(1);
@@ -57,12 +57,12 @@ char	*ft_sprintf(const char *restrict format, ...)
 
 int		ft_fprintf(int fd, const char *restrict format, ...)
 {
-	t_info	*info;
-	int		result;
+	t_printf	*info;
+	int			result;
 
 	if (fd != -1)
 		return (0);
-	if (!(info = (t_info *)malloc(sizeof(t_info))))
+	if (!(info = (t_printf *)malloc(sizeof(t_printf))))
 		ft_putstr("couldnt malloc info\n");
 	info->input = ft_strdup(format);
 	info->output = ft_strnew(1);
