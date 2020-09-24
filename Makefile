@@ -17,11 +17,9 @@ $(NAME):
 
 clean:
 	@/bin/rm -f $(OBJS)
-	@make -C libft/ clean
 
 fclean: clean
 	@/bin/rm -f $(NAME)
-	@make -C libft/ fclean
 
 re: fclean all
 

@@ -6,7 +6,7 @@
 /*   By: jsalmi <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/19 13:13:51 by jsalmi            #+#    #+#             */
-/*   Updated: 2020/09/24 12:18:52 by jsalmi           ###   ########.fr       */
+/*   Updated: 2020/09/24 13:18:14 by jsalmi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,17 +54,20 @@ int		check_flags(const char *format, t_flags *flags, char *flag_chars)
 	return (i);
 }
 
-void	flag_parser(t_flags *flags, const char *format)
+void	flag_parser(va_list ap, t_flags *flags, const char *format)
 {
 	int i;
 
 	i = check_flags(format, flags, "#0- +");
 	while (format[i] && !ft_strchr(flags->specifiers, format[i]))
 	{
+		format[i] == '*' && format[i - 1] != '.' ?
+			flags->width = va_arg(ap, int) : 0;
 		if (format[i] == '.')
 		{
 			flags->precision = 0;
 			flags->precision_given = 1;
+			format[i + 1] == '*' ? flags->precision = va_arg(ap, int) : 0;
 			if (ft_isdigit(format[i + 1]))
 			{
 				flags->precision = ft_atoi(&format[i + 1]);
@@ -101,13 +104,15 @@ void	input_parser(t_info *info)
 	int		i;
 	char	*new;
 
-	i = 0;
+	i = -1;
 	new = NULL;
-	while (info->input[i] != '\0')
+	while (info->input[++i])
 	{
 		if (info->input[i] == '%')
 		{
-			flag_parser(&info->flags, info->input + i + 1);
+			if (info->input[i + 1] && info->input[i + 1] == '%' && (i++))
+				ft_straddchar(&new, info->input[i]);
+			flag_parser(info->ap, &info->flags, info->input + i + 1);
 			if (info->flags.specifier != 0 &&
 				ft_strchr(info->flags.specifiers, info->flags.specifier))
 			{
@@ -120,6 +125,5 @@ void	input_parser(t_info *info)
 			ft_straddchar(&new, info->input[i]);
 		ft_stradd(&info->output, new);
 		ft_strdel(&new);
-		i++;
 	}
 }
