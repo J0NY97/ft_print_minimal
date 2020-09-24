@@ -6,7 +6,7 @@
 /*   By: jsalmi <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/23 16:14:12 by jsalmi            #+#    #+#             */
-/*   Updated: 2020/09/23 16:16:21 by jsalmi           ###   ########.fr       */
+/*   Updated: 2020/09/24 10:55:42 by jsalmi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,11 +50,17 @@ char	*put_int(size_t d, t_flags *flags)
 	return (new);
 }
 
-char	*put_str(char *d)
+char	*put_str(char *d, t_flags *flags)
 {
 	char *new;
+	char *temp;
 
 	new = ft_strdup(d);
+	if (flags->precision_given != -1)
+	{
+		temp = ft_strndup(new, flags->precision);
+		ft_strreplace(&new, &temp);
+	}
 	return (new);
 }
 

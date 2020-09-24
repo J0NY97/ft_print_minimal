@@ -6,46 +6,11 @@
 /*   By: jsalmi <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/19 13:13:51 by jsalmi            #+#    #+#             */
-/*   Updated: 2020/09/23 16:50:54 by jsalmi           ###   ########.fr       */
+/*   Updated: 2020/09/24 11:23:08 by jsalmi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
-
-char	*output_type(char type, va_list ap, t_flags *flags);
-int		flag_parser(t_flags *flags, const char *format);
-void	flag_filter(t_flags *flags);
-
-void	input_parser(t_info *info)
-{
-	int		i;
-	char	*new;
-	char	*temp;
-
-	i = 0;
-	while (info->input[i] != '\0')
-	{
-		if (info->input[i] == '%')
-		{
-			flag_parser(&info->flags, info->input + i + 1);
-			if (info->flags.specifier != 0 &&
-				ft_strchr(info->flags.specifiers, info->flags.specifier))
-			{
-				while (info->input[i] != info->flags.specifier)
-					i++;
-				new = output_type(info->flags.specifier, info->ap, &info->flags);
-			}
-		}
-		else
-		{
-			new = ft_strnew(1);
-			new[0] = info->input[i];
-		}
-		ft_stradd(&info->output, new);
-		ft_strdel(&new);
-		i++;
-	}	
-}
 
 void	reset_flags(t_flags *flags)
 {
@@ -69,7 +34,7 @@ void	reset_flags(t_flags *flags)
 int		check_flags(const char *format, t_flags *flags, char *flag_chars)
 {
 	int i;
-	
+
 	i = 0;
 	while (format[i] && ft_strchr(flag_chars, format[i]))
 	{
@@ -124,7 +89,7 @@ char	*padding(char *str, char type, t_flags *flags)
 	char	*new;
 	int		padd_amount;
 	int		k;
-	
+
 	k = -1;
 	new = NULL;
 	if ((int)ft_strlen(str) < flags->width)
@@ -149,7 +114,7 @@ char	*specifier_padding(char *str, char type, t_flags *flags)
 	int		padd_amount;
 	int		k;
 	int		len;
-	
+
 	k = -1;
 	new = NULL;
 	len = ft_strlen(str);
@@ -183,19 +148,18 @@ char	*add_special_chars(const char *old, t_flags *flags)
 	else if (flags->hash == 1 &&
 			(flags->specifier == 'x' || flags->specifier == 'X') && (set = 1))
 		temp = ft_strjoin("0X", new);
-	else if (flags->hash == 1 &&
-			flags->specifier == 'o' && flags->precision_given == -1 && (set = 1))
+	else if (flags->hash == 1 && flags->specifier == 'o'
+			&& flags->precision_given == -1 && (set = 1))
 		temp = ft_strjoin("0", new);
 	if (set == 1)
 		ft_strreplace(&new, &temp);
 	return (new);
 }
 
-char	*output_type(char type, va_list ap, t_flags *flags)
+char	*specifier_to_string(char type, va_list ap, t_flags *flags)
 {
 	char *new;
-	char *temp;
-	
+
 	if (type == 'c')
 		new = put_char(va_arg(ap, int));
 	else if (type == 'd' || type == 'i')
@@ -203,50 +167,87 @@ char	*output_type(char type, va_list ap, t_flags *flags)
 	else if (type == 'x' || type == 'X' || type == 'u' || type == 'o')
 		new = put_int((unsigned long long int)va_arg(ap, void *), flags);
 	else if (type == 's')
-		new = put_str(va_arg(ap, char *));
+		new = put_str(va_arg(ap, char *), flags);
 	else if (type == 'f')
 		new = put_float((long double)va_arg(ap, double), flags);
-/*	printf("w: %d, m: %d p: %d h: %d z: %d s: %d prec_given %d precision %d\n",
-			flags->width, flags->minus, flags->plus, flags->hash, flags->zero,
-			flags->space, flags->precision_given, flags->precision);*/
-	if (flags->precision_given != -1 && flags->specifier == 's')
-	{
-		temp = ft_strndup(new, flags->precision);
-		ft_strreplace(&new, &temp);
-	}
+	return (new);
+}
+
+void	apply_flags_to_string(char **new, t_flags *flags)
+{
+	char	*temp;
+
 	if (flags->precision_given != -1 && flags->specifier != 'f')
 	{
-		temp = specifier_padding(new, type, flags);
-		ft_strreplace(&new, &temp);
+		temp = specifier_padding(*new, flags->specifier, flags);
+		ft_strreplace(new, &temp);
 	}
-	// the special characters, 0x, +, - if not zero
 	if (flags->zero == -1)
 	{
-		temp = add_special_chars(new, flags);
-		ft_strreplace(&new, &temp);
+		temp = add_special_chars(*new, flags);
+		ft_strreplace(new, &temp);
 		if (flags->negativ == 1)
 		{
-			temp = ft_strjoin("-", new);
-			ft_strreplace(&new, &temp);
+			temp = ft_strjoin("-", *new);
+			ft_strreplace(new, &temp);
 		}
 	}
 	if (flags->width > -1)
 	{
-		temp = padding(new, type, flags);
-		ft_strreplace(&new, &temp);
+		temp = padding(*new, flags->specifier, flags);
+		ft_strreplace(new, &temp);
 	}
-	// the special characters, 0x, +, - if zero
 	if (flags->zero == 1)
 	{
-		temp = add_special_chars(new, flags);
-		ft_strreplace(&new, &temp);
+		temp = add_special_chars(*new, flags);
+		ft_strreplace(new, &temp);
 		if (flags->negativ == 1)
-			new[0] = '-';
+			*new[0] = '-';
 	}
+}
 
-	int i = 0;
+char	*output_type(char type, va_list ap, t_flags *flags)
+{
+	char	*new;
+	char	*temp;
+	int		i;
+
+	i = 0;
+	new = specifier_to_string(type, ap, flags);
+	apply_flags_to_string(&new, flags);
 	if (flags->specifier == 'x')
 		while (new[i++])
 			new[i] = ft_tolower(new[i]);
 	return (new);
+}
+
+void	input_parser(t_info *info)
+{
+	int		i;
+	char	*new;
+	char	*temp;
+
+	i = 0;
+	while (info->input[i] != '\0')
+	{
+		if (info->input[i] == '%')
+		{
+			flag_parser(&info->flags, info->input + i + 1);
+			if (info->flags.specifier != 0 &&
+				ft_strchr(info->flags.specifiers, info->flags.specifier))
+			{
+				while (info->input[i] != info->flags.specifier)
+					i++;
+				new = output_type(info->flags.specifier, info->ap, &info->flags);
+			}
+		}
+		else
+		{
+			new = ft_strnew(1);
+			new[0] = info->input[i];
+		}
+		ft_stradd(&info->output, new);
+		ft_strdel(&new);
+		i++;
+	}
 }
