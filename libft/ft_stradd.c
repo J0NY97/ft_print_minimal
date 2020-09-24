@@ -6,7 +6,7 @@
 /*   By: jsalmi <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/20 13:16:07 by jsalmi            #+#    #+#             */
-/*   Updated: 2020/09/20 13:26:38 by jsalmi           ###   ########.fr       */
+/*   Updated: 2020/09/24 11:47:57 by jsalmi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ int		ft_stradd(char **dest, char *src)
 
 	if (!src)
 		return (0);
-	if (!(*dest))
+	if (!(*dest) || *dest == NULL)
 	{
 		*dest = ft_strdup(src);
 		return (1);

@@ -6,7 +6,7 @@
 /*   By: jsalmi <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/17 14:44:05 by jsalmi            #+#    #+#             */
-/*   Updated: 2020/09/23 16:44:14 by jsalmi           ###   ########.fr       */
+/*   Updated: 2020/09/24 11:36:31 by jsalmi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,5 +99,6 @@ int					ft_pow(int base, int exp);
 char				*ft_itoa_base(size_t nbr, int base);
 int					ft_stradd(char **dest, char *src);
 int					ft_strreplace(char **dest, char **src);
+void				ft_straddchar(char **str, char c);
 
 #endif

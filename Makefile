@@ -2,6 +2,8 @@ NAME = a.out
 SRCS = ./main.c\
 		./ft_printf.c\
 		./input_parser.c\
+		./str_modification.c\
+		./special_functions.c\
 		./put_functions.c
 OBJS = ./*.o
 INCLUDES = ./libft/libft.a
