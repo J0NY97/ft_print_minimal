@@ -6,7 +6,7 @@
 /*   By: jsalmi <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/19 13:13:51 by jsalmi            #+#    #+#             */
-/*   Updated: 2020/09/24 13:50:46 by jsalmi           ###   ########.fr       */
+/*   Updated: 2020/09/26 14:20:18 by jsalmi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,8 +94,13 @@ char	*output_type(va_list ap, t_flags *flags)
 	new = specifier_to_string(flags->specifier, ap, flags);
 	apply_flags_to_string(&new, flags);
 	if (flags->specifier == 'x')
-		while (new[i++])
+	{
+		while (new[i])
+		{
 			new[i] = ft_tolower(new[i]);
+			i++;
+		}
+	}
 	return (new);
 }
 
