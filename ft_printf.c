@@ -60,7 +60,7 @@ int		ft_fprintf(int fd, const char *restrict format, ...)
 	t_printf	*info;
 	int			result;
 
-	if (fd != -1)
+	if (fd < 0)
 		return (0);
 	if (!(info = (t_printf *)malloc(sizeof(t_printf))))
 		ft_putstr("couldnt malloc info\n");
