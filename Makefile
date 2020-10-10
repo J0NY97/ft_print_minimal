@@ -10,8 +10,8 @@ FLAGS = -Wall -Wextra -Werror
 
 all: $(NAME)
 
-$(NAME):
-	@gcc $(FLAGS) -c $(SRCS) -I $(INCLUDES) 
+$(NAME): $(OBJS)
+	@gcc $(FLAGS) -c $(SRCS) -I $(INCLUDES)
 	@ar rc $(NAME) $(OBJS)
 	@ranlib $(NAME)
 
